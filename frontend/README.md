@@ -27,6 +27,7 @@ It provides a simple UI where users can enter a **plain-English search request**
 
 ## 📂 Project Structure
 
+```
 📂 frontend/ # React frontend
 │── 📂 src/ # React components & logic
 │── 📂 public/ # Static assets
@@ -34,7 +35,9 @@ It provides a simple UI where users can enter a **plain-English search request**
 │── 📄 package.json # Frontend dependencies & scripts
 │── 📄 README.md # Frontend-specific documentation
 
---
+```
+
+---
 
 ## ⚡ Installation & Setup
 
