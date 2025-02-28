@@ -33,7 +33,6 @@ const limiter = rateLimit({
   max: 5, // Limit each IP to 5 requests per minute
   message: "Too many requests, please try again later.",
 });
-
 // Configure server to use the rate limiter
 app.use(limiter);
 
@@ -126,6 +125,5 @@ apiRouter.post("/dork", async (req: Request, res: Response): Promise<any> => {
 // Use the "/api" prefix for all API routes
 app.use("/api", apiRouter);
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// Export for use in index.ts file
+export { app, redisClient, port };
