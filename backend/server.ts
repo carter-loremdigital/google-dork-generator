@@ -3,6 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import axios from "axios";
 import { systemPrompt } from "./data";
+import rateLimit from "express-rate-limit";
+import RedisStore from "rate-limit-redis";
+import { createClient } from "redis";
 
 // Access environment variables
 dotenv.config();
@@ -14,22 +17,50 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Prefix API routes with "/api"
+// Create and connect Redis client with Upstash URL
+const redisClient = createClient({
+  url: process.env.UPSTASH_REDIS_URL,
+});
+redisClient.connect().catch(console.error);
+
+// Set up rate limiting middleware with Redis as the store
+const limiter = rateLimit({
+  store: new RedisStore({
+    // sendCommand function is used by rate-limit-redis to interact with Redis
+    sendCommand: (...args) => redisClient.sendCommand(args),
+  }),
+  windowMs: 60 * 1000, // 1 minute window
+  max: 5, // Limit each IP to 5 requests per minute
+  message: "Too many requests, please try again later.",
+});
+
+// Configure server to use the rate limiter
+app.use(limiter);
+
 const apiRouter = express.Router();
 
+// System prompt for OpenAI API request
 const SYSTEM_PROMPT = systemPrompt;
 
 // API endpoint for generating Google dorks
 apiRouter.post("/dork", async (req: Request, res: Response): Promise<any> => {
+  const { query } = req.body;
+  if (!query) {
+    return res.status(400).json({
+      dork: "",
+      explanation: "",
+      error: true,
+      errorMessage: "Missing 'query' in request body.",
+    });
+  }
+
+  // Use a normalized query as the cache key
+  const cacheKey = `dork:${query.toLowerCase().trim()}`;
   try {
-    const { query } = req.body;
-    if (!query) {
-      return res.status(400).json({
-        dork: "",
-        explanation: "",
-        error: true,
-        errorMessage: "Missing 'query' in request body.",
-      });
+    // Check Redis cache for query key
+    const cachedResult = await redisClient.get(cacheKey);
+    if (cachedResult) {
+      return res.json(JSON.parse(cachedResult));
     }
 
     // Prepare payload for OpenAI API call
@@ -76,6 +107,9 @@ apiRouter.post("/dork", async (req: Request, res: Response): Promise<any> => {
         errorMessage: "Invalid JSON received from OpenAI API.",
       });
     }
+
+    // Cache the result with a TTL of 24 hours (86400 seconds)
+    await redisClient.setEx(cacheKey, 86400, JSON.stringify(result));
 
     // Return the parsed result which should match our schema
     return res.json(result);

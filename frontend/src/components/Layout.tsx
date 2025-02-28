@@ -18,7 +18,6 @@ const Layout = ({ children }: LayoutProps) => {
         justifyContent: "center",
         minHeight: "80vh",
         textAlign: "center",
-        p: 4,
       }}
     >
       <Container maxWidth="md" sx={{ py: 8, textAlign: "center" }}>

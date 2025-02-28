@@ -9,10 +9,14 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@emotion/react";
+import theme from "./theme.ts";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <CssBaseline />
-    <App />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
   </StrictMode>
 );

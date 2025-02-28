@@ -1,4 +1,4 @@
-import { Stack, Typography, Link } from "@mui/material";
+import { Stack, Typography, Link, Divider } from "@mui/material";
 import Layout from "./components/Layout";
 import DorkForm from "./components/DorkForm";
 import { InfoOutlined } from "@mui/icons-material";
@@ -7,11 +7,11 @@ import Examples from "./components/Examples";
 function App() {
   return (
     <Layout>
-      <Stack spacing={2} mb={2}>
+      <Stack spacing={2} mb={2} alignItems="center">
         <Typography component="h1" variant="h3">
           Google Dork Generator
         </Typography>
-        <Typography>
+        <Typography color="text.secondary" maxWidth="sm">
           {`Find exactly what you're looking for on Google in a sea of
           AI-generated garbage... with AI! `}
         </Typography>
@@ -22,6 +22,7 @@ function App() {
         </Stack>
       </Stack>
       <DorkForm />
+      <Divider />
       <Examples />
     </Layout>
   );
