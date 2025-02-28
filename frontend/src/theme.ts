@@ -2,7 +2,7 @@ import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 let theme = createTheme({
   palette: {
-    mode: "dark", // enables dark mode for proper contrast
+    mode: "dark", // Enables dark mode for proper contrast
     primary: {
       main: "#02cc02", // green accent
     },
@@ -11,11 +11,11 @@ let theme = createTheme({
       paper: "#000000", // black for paper components
     },
     text: {
-      primary: "#00ff00", // green text
+      primary: "#02cc02", // Green text
     },
   },
   typography: {
-    fontFamily: 'Monaco, "Courier New", monospace', // monospace for terminal feel
+    fontFamily: '"Courier New", monospace', // Monospace font for terminal feel
   },
   components: {
     MuiOutlinedInput: {
@@ -36,6 +36,7 @@ let theme = createTheme({
   },
 });
 
+// Enable responsive font sizes
 theme = responsiveFontSizes(theme);
 
 export default theme;

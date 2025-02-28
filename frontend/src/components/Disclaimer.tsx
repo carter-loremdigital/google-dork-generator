@@ -1,7 +1,5 @@
 import { Alert, AlertTitle, List, ListItem, Link } from "@mui/material";
 
-// type Props = {};
-
 const Disclaimer = () => {
   return (
     <Alert

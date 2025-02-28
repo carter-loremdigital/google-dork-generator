@@ -3,7 +3,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { useState } from "react";
 import { Check } from "@mui/icons-material";
 
-const CopyButton = ({ data }: { data: string | "" }) => {
+const CopyButton = ({ data }: { data: string }) => {
   const [copied, setCopied] = useState(false);
   const handleCopy = async () => {
     try {

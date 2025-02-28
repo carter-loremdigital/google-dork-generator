@@ -2,7 +2,6 @@ import { Container, Box } from "@mui/material";
 import { ReactNode } from "react";
 import Footer from "./Footer";
 import Disclaimer from "./Disclaimer";
-// import Examples from "./Examples";
 
 interface LayoutProps {
   children: ReactNode;
@@ -22,7 +21,6 @@ const Layout = ({ children }: LayoutProps) => {
     >
       <Container maxWidth="md" sx={{ py: 8, textAlign: "center" }}>
         {children}
-        {/* <Examples /> */}
         <Disclaimer />
       </Container>
       <Footer />

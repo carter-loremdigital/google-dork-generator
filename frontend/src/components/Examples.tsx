@@ -11,8 +11,8 @@ const Examples = () => {
       }}
     >
       <AlertTitle>Examples</AlertTitle>
-      This tool works better with more specific search queries. Try these
-      examples or use them to help construct your own query:
+      This tool works best with specific search queries. Try these examples or
+      use them to help construct your own query:
       <List sx={{ fontStyle: "italic" }}>
         {examples.map((item, index) => (
           <ListItem key={index}>{item}</ListItem>

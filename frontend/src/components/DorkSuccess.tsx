@@ -29,6 +29,7 @@ const DorkSuccess = ({ dork }: { dork: Dork }) => {
           <Stack direction="row" alignItems="center" color="primary.main">
             <OpenInNew fontSize="small" />
             <Link
+              // Format dork to URL
               href={`https://www.google.com/search?q=${encodeURIComponent(
                 dork.dork
               )}`}
@@ -37,6 +38,7 @@ const DorkSuccess = ({ dork }: { dork: Dork }) => {
               {dork.dork}
             </Link>
           </Stack>
+          {/* Copy button for copying generated dork to clipboard */}
           <CopyButton data={dork.dork} />
         </Stack>
       </Stack>

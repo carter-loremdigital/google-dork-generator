@@ -6,7 +6,7 @@
 AI-Powered Google Dork Generator
 
 **Goal:**  
-Create a lightweight, portfolio-ready application that converts a user's plain-English request into a structured Google Dork query. The application leverages the OpenAI API (using the gpt-3.5-turbo model) to generate queries while enforcing strict guidelines via a system prompt.
+Create a lightweight, portfolio-ready application that converts a user's plain-English request into a structured Google Dork query. The application leverages the OpenAI API (using the gpt-4o-mini model) to generate queries while enforcing strict guidelines via a system prompt.
 
 **Key Features:**
 
@@ -23,7 +23,6 @@ Create a lightweight, portfolio-ready application that converts a user's plain-E
   - Deployed on Vercel using serverless functions for backend API calls.
 - **Security & Scalability:**
   - Uses Redis for both rate limiting and caching to prevent abuse of the OpenAI API and ensure consistency across serverless instances.
-  - Implements fuzzy matching for caching similar requests, reducing redundant API calls.
 
 ## 2. Motivations & Audience
 
@@ -36,7 +35,7 @@ Create a lightweight, portfolio-ready application that converts a user's plain-E
 
 - **Cost Efficiency & Scalability:**
 
-  - Use gpt-3.5-turbo for its affordability and speed.
+  - Use gpt-4o-mini for its affordability and speed.
   - Combine rate limiting and caching via Redis to minimize API usage and ensure smooth operation.
 
 - **User-Centric Approach:**
@@ -53,8 +52,8 @@ Create a lightweight, portfolio-ready application that converts a user's plain-E
 
 - **Administrators/Developers:**
 
-  - Portfolio reviewers and potential employers assessing your ability to implement secure, scalable applications.
-  - Developers interested in modular, serverless, and monorepo-based architectures.
+  - Portfolio reviewers and potential employers assessing my ability to implement secure, scalable applications.
+  - Developers interested in modular, serverless, and monorepo-based architectures or AI integration.
 
 ## 3. Technical Architecture & Implementation Details
 
@@ -64,23 +63,24 @@ Create a lightweight, portfolio-ready application that converts a user's plain-E
 
   - **Frontend (React):**
     - Single-page application with a simple form for entering a plain-English description.
-    - Displays the generated Google Dork and provides feedback if a similar request was cached.
+    - Displays the generated Google Dork as a clickable link or copyable text and provides error feedback.
+    - Display an error if user hits the rate limit or their query is rejected by the model.
   - **Backend (Express):**
-    - API endpoint that receives the description, checks the cache (with fuzzy matching), and either returns a cached dork or fetches a new one via OpenAI.
+    - API endpoint that receives the description, checks the cache, and either returns a cached dork or fetches a new one via OpenAI.
     - Implements rate limiting using Redis to prevent API key abuse.
 
 - **Redis Integration:**
   - Used for two purposes:
     1. **Rate Limiting:** Ensures each IP is restricted to a defined number of API calls per minute.
-    2. **Request Caching:** Stores previously generated queries and uses fuzzy matching (via a library like `string-similarity`) to return cached results for similar requests.
+    2. **Request Caching:** Stores previously generated queries and uses exact string matching to return cached results for similar requests.
 - **OpenAI API Integration:**
 
-  - Utilizes the gpt-3.5-turbo model with a strict system prompt to generate only valid Google Dork queries.
+  - Utilizes the gpt-4o-mini model with a strict system prompt to generate only valid Google Dork queries.
   - Returns structured JSON so that the frontend can easily consume the results.
 
 - **Deployment:**
   - Hosted on Vercel with serverless functions for the Express backend.
-  - Environment variables securely manage sensitive credentials (e.g., `OPENAI_API_KEY`, `REDIS_URL`).
+  - Environment variables securely manage sensitive credentials (e.g., API Keys, connection URLs, etc).
 
 ### Technology Stack
 
@@ -90,7 +90,7 @@ Create a lightweight, portfolio-ready application that converts a user's plain-E
 | **Components & Styling** | Material UI                 | Robust and flexible component library.                                             |
 | **Backend**              | Express                     | Simple Node.js framework for API routing and middleware.                           |
 | **Cache/Rate Limiting**  | Redis (Managed via Upstash) | Provides distributed caching and robust rate limiting for serverless environments. |
-| **LLM API**              | OpenAI gpt-3.5-turbo        | Cost-effective, supports system prompts, and delivers quick responses.             |
+| **LLM API**              | OpenAI gpt-4o-mini          | Cost-effective, supports system prompts, and delivers quick & accurate responses.  |
 | **Deployment**           | Vercel                      | Easy deployment of monorepo projects with serverless functions.                    |
 
 ### Implementation Plan
@@ -103,17 +103,17 @@ Create a lightweight, portfolio-ready application that converts a user's plain-E
 2. **Frontend Development:**
 
    - Build a simple React application with a form to accept a plain-English description.
-   - Display results (Google Dork) and indicate if the response was retrieved from cache.
+   - Display results (Google Dork) and provide user with a clickable link or the option to copy text to clipboard.
 
 3. **Backend Development:**
 
    - Implement an Express server with a `/api/dork` POST endpoint.
-   - Integrate with the OpenAI API using the gpt-3.5-turbo model.
+   - Integrate with the OpenAI API using the gpt-4o-mini model.
    - Implement caching logic with Redis:
      - Normalize incoming descriptions.
-     - Retrieve and compare cached queries using fuzzy matching.
+     - Retrieve and compare cached queries using exact matching.
      - Store new queries with a TTL.
-   - Integrate rate limiting using a Redis-backed store (e.g., via `express-rate-limit` with `rate-limit-redis`).
+   - Integrate rate limiting using a Redis-backed store (via `express-rate-limit` with `rate-limit-redis`).
 
 4. **Deployment:**
 
@@ -122,8 +122,8 @@ Create a lightweight, portfolio-ready application that converts a user's plain-E
 
 5. **Testing & Optimization:**
    - Ensure proper error handling and logging.
-   - Test fuzzy matching thresholds to balance precision and recall.
    - Optimize Redis connection management in the serverless context.
+   - Test Express API endpoints using Jest.
 
 ## 4. Design Justifications & Considerations
 
@@ -131,20 +131,16 @@ Create a lightweight, portfolio-ready application that converts a user's plain-E
 
   - Simplifies development by keeping frontend and backend in one repository.
   - Vercel’s serverless functions ensure scalability and ease of deployment.
+  - Works well with minimal backend providing only one API endpoint.
 
 - **Redis for Caching & Rate Limiting:**
 
   - Provides persistence across stateless serverless invocations.
   - Allows both rate limiting and caching to be handled by a single external service, reducing complexity.
 
-- **Fuzzy Matching for Similar Requests:**
-
-  - Reduces redundant calls to the OpenAI API by recognizing and reusing similar queries.
-  - Enhances performance and cost efficiency without compromising user experience.
-
 - **OpenAI Model Selection:**
 
-  - gpt-3.5-turbo is chosen for its balance of affordability and capability.
+  - gpt-4o-mini is chosen for its balance of affordability and capability.
   - System prompts ensure that the model remains on-task, generating only valid Google Dork queries.
 
 - **Security & Scalability:**
@@ -153,4 +149,4 @@ Create a lightweight, portfolio-ready application that converts a user's plain-E
 
 ## 5. Conclusion
 
-This project is both a practical portfolio piece and a demonstration of modern web application design leveraging a monorepo structure, Vercel’s serverless functions, Redis for caching and rate limiting, and OpenAI’s gpt-3.5-turbo for generating Google Dorks. This design journey outlines the technical and user-focused decisions that make the project both feasible and scalable. This design journey is intended to be a living and breathing document that can be amended throughout the development process as the application and its requirements evolve.
+This project is both a practical portfolio piece and a demonstration of modern web application design leveraging a monorepo structure, Vercel’s serverless functions, Redis for caching and rate limiting, and OpenAI’s gpt-4o-mini for generating Google Dorks. This design journey outlines the technical and user-focused decisions that make the project both feasible and scalable. This design journey is intended to be a living and breathing document that can be amended throughout the development process as the application and its requirements evolve.

@@ -1,4 +1,5 @@
 {
+  "name": "google-dork-generator",
   "private": true,
   "workspaces": [
     "frontend",
