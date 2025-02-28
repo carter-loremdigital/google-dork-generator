@@ -12,7 +12,7 @@ const Examples = () => {
     >
       <AlertTitle>Examples</AlertTitle>
       This tool works better with more specific search queries. Try these
-      examples to see what you can find with this tool:
+      examples or use them to help construct your own query:
       <List sx={{ fontStyle: "italic" }}>
         {examples.map((item, index) => (
           <ListItem key={index}>{item}</ListItem>

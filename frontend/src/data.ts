@@ -1,7 +1,7 @@
 export const examples = [
-  '"Search for research papers in PDF format from 2023 about machine learning"',
-  '"I need free design templates in PSD format from the last 6 months"',
-  '"Find graphic design freelancing opportunities on upwork.com posted within the last week"',
+  '"Find scholarly articles about quantum computing in PDF format from Stanford University published between 2021 and 2023"',
+  "\"Find Tesla press releases in PDF format from the Tesla website, excluding results containing 'Elon Musk'\"",
+  '"Search for legal case studies related to intellectual property law on Harvard Law Review\'s website"',
 ];
 
 export const testDork = {

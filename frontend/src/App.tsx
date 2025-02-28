@@ -18,7 +18,12 @@ function App() {
 
         <Stack direction="row" justifyContent="center" spacing={1}>
           <InfoOutlined color="primary" />
-          <Link href="/">What's a Google Dork?</Link>
+          <Link
+            href="https://www.imperva.com/learn/application-security/google-dorking-hacking/"
+            target="_blank"
+          >
+            What's a Google Dork?
+          </Link>
         </Stack>
       </Stack>
       <DorkForm />

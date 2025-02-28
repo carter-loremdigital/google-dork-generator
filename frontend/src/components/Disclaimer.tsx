@@ -14,7 +14,9 @@ const Disclaimer = () => {
       <AlertTitle>Disclaimer</AlertTitle>
       This tool is intended solely for ethical, legal, and non-malicious
       purposes. It is designed to help users refine search queries for research,
-      academic, open data discovery, and general information retrieval.
+      academic, open data discovery, and general information retrieval. Results
+      from this tool are AI-generated and may be inaccurate, incomplete, or
+      misleading. Always verify results before use.
       <List
         sx={{
           listStyleType: "disc",
@@ -31,6 +33,7 @@ const Disclaimer = () => {
           <Link
             href="https://policies.google.com/terms?hl=en-US"
             target="_blank"
+            color="warning.main"
           >
             Google's Terms of Service
           </Link>
