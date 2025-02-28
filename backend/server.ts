@@ -2,7 +2,6 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import axios from "axios";
-import { systemPrompt } from "./data";
 import rateLimit from "express-rate-limit";
 import RedisStore from "rate-limit-redis";
 import { createClient } from "redis";
@@ -39,7 +38,8 @@ app.use(limiter);
 const apiRouter = express.Router();
 
 // System prompt for OpenAI API request
-const SYSTEM_PROMPT = systemPrompt;
+const promptBase64 = process.env.SYSTEM_PROMPT_BASE64 || "";
+const SYSTEM_PROMPT = Buffer.from(promptBase64, "base64").toString("utf-8");
 
 // API endpoint for generating Google dorks
 apiRouter.post("/dork", async (req: Request, res: Response): Promise<any> => {
