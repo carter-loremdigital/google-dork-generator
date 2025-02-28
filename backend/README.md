@@ -45,6 +45,7 @@ Create a `.env` file in the `backend` folder:
 PORT=3000
 OPENAI_API_KEY=your-openai-api-key
 UPSTASH_REDIS_URL=your-upstash-redis-url
+SYSTEM_PROMPT_BASE64=your-system-prompt-in-base64 # (preserves newlines, quotes, and special characters)
 ```
 
 ### 3️⃣ Start the Development Server
