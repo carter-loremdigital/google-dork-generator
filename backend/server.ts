@@ -12,8 +12,12 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+const corsOptions = {
+  origin: process.env.CANONICAL_URL,
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Create and connect Redis client with Upstash URL
