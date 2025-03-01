@@ -2,7 +2,7 @@ import request from "supertest";
 import axios from "axios";
 // use Upstash Redis instance due to issues mocking Redis
 // !!! Running tests with interact with the REAL REDIS DATABASE !!!
-import { app, redisClient } from "../server";
+import { app, redisClient } from "../api/server";
 
 // Variable to hold server instance
 let server: any;

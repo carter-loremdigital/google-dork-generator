@@ -11,6 +11,9 @@ yarn-error.log*
 # backend/dist/
 # frontend/dist-ssr/
 *dist*/
+backend/*.js
+backend/api/*.js
+backend/tests/*.js
 
 # Environment variable files
 .env
