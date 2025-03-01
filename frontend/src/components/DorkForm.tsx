@@ -28,7 +28,8 @@ const DorkForm = () => {
     // Hit backend API to generate Google dork with user's query
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/dork`,
+        // `${import.meta.env.VITE_API_BASE_URL}/api/dork`,
+        "/api/dork",
         {
           method: "POST",
           headers: {
