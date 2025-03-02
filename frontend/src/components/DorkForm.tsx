@@ -39,7 +39,7 @@ const DorkForm = () => {
         }
       );
 
-      console.log(response);
+      // console.log(response);
 
       // Handle HTTP errors with custom error message
       if (!response.ok) {
