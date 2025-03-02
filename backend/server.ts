@@ -10,6 +10,7 @@ import { createClient } from "redis";
 dotenv.config();
 
 const app = express();
+app.set("trust proxy", true); // Trust Vercel proxy - needed for express-rate-limit
 const port = process.env.PORT || 3000;
 
 // Middleware
