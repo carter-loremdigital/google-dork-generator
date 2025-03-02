@@ -29,7 +29,7 @@ const DorkForm = () => {
     try {
       const response = await fetch(
         // `${import.meta.env.VITE_API_BASE_URL}/api/dork`,
-        "/api/dork",
+        "/api/dork", // Use relative URL for Vercel deployment
         {
           method: "POST",
           headers: {
@@ -38,6 +38,8 @@ const DorkForm = () => {
           body: JSON.stringify({ query: query.trim() }), // Trim leading & trailing whitespace
         }
       );
+
+      console.log(response);
 
       // Handle HTTP errors with custom error message
       if (!response.ok) {
