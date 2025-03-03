@@ -21,7 +21,7 @@ app.use(express.json());
 const redisClient = createClient({
   url: process.env.UPSTASH_REDIS_URL,
   socket: {
-    connectTimeout: 60000, // Timeout in milliseconds (15 seconds)
+    connectTimeout: 15000, // Timeout in milliseconds (15 seconds)
     reconnectStrategy: false, // let the cold start fail quickly (but with a logged error), and Vercel will automatically retry the request
   },
 });
