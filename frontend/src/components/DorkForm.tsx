@@ -54,6 +54,9 @@ const DorkForm = () => {
           case 500:
             message = "Internal server error. Please try again later.";
             break;
+          case 504:
+            message = "Request timed out. Please try again.";
+            break;
           default:
             message = "An unexpected error occurred.";
         }
